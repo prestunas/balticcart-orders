@@ -1,0 +1,87 @@
+<section class="toolbar" aria-label="Order filters">
+  <div class="toolbar__summary">
+    <span class="toolbar__count">{{ filteredOrders.length }}</span>
+    <span class="toolbar__count-label">
+      of {{ orders.length }} order{{ orders.length === 1 ? '' : 's' }}
+    </span>
+  </div>
+
+  <div class="toolbar__controls">
+    <label class="field field--search">
+      <span class="field__label">Search</span>
+      <input
+        type="text"
+        class="field__input"
+        placeholder="Order number or customer name"
+        [ngModel]="searchTerm"
+        (ngModelChange)="onSearchTermChange($event)"
+        [disabled]="loading || loadError"
+      />
+    </label>
+
+    <label class="field field--status">
+      <span class="field__label">Status</span>
+      <select
+        class="field__input"
+        [ngModel]="statusFilter"
+        (ngModelChange)="onStatusFilterChange($event)"
+        [disabled]="loading || loadError"
+      >
+        <option value="ALL">All statuses</option>
+        <option *ngFor="let status of statuses" [value]="status">{{ status }}</option>
+      </select>
+    </label>
+
+    <button type="button" class="refresh-btn" (click)="loadOrders()" [disabled]="loading">
+      Refresh
+    </button>
+  </div>
+</section>
+
+<section class="content-panel">
+  <div class="state-panel" *ngIf="loading">
+    <div class="spinner" aria-hidden="true"></div>
+    <p>Loading orders…</p>
+  </div>
+
+  <div class="state-panel state-panel--error" *ngIf="!loading && loadError">
+    <p class="state-panel__title">Couldn't load orders</p>
+    <p>We couldn't reach the BalticCart orders service. Check that the backend is running and try again.</p>
+    <button type="button" class="refresh-btn" (click)="loadOrders()">Try again</button>
+  </div>
+
+  <div class="state-panel" *ngIf="!loading && !loadError && orders.length === 0">
+    <p class="state-panel__title">No orders yet</p>
+    <p>New orders will show up here as soon as they're created.</p>
+  </div>
+
+  <div class="state-panel" *ngIf="!loading && !loadError && orders.length > 0 && filteredOrders.length === 0">
+    <p class="state-panel__title">No matching orders</p>
+    <p>Try a different search term or status filter.</p>
+  </div>
+
+  <div class="table-wrapper" *ngIf="!loading && !loadError && filteredOrders.length > 0">
+    <table class="orders-table">
+      <thead>
+        <tr>
+          <th scope="col">Order #</th>
+          <th scope="col">Customer</th>
+          <th scope="col">Created</th>
+          <th scope="col">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let order of filteredOrders">
+          <td class="orders-table__order-number">{{ order.orderNumber }}</td>
+          <td>{{ order.customerName }}</td>
+          <td>{{ order.createdAt | vilniusDate }}</td>
+          <td>
+            <span class="status-badge" [ngClass]="'status-badge--' + order.status.toLowerCase()">
+              {{ order.status }}
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>

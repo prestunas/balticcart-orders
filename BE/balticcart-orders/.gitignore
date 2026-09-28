@@ -1,33 +1,61 @@
+# Maven ir Java
 HELP.md
 target/
 .mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
-
-### STS ###
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
-.sts4-cache
-
-### IntelliJ IDEA ###
-.idea
-*.iws
-*.iml
-*.ipr
-
-### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
 build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
-### VS Code ###
-.vscode/
+# Angular ir Node
+/dist
+/tmp
+/out-tsc
+/bazel-out
+/node_modules
+/.angular/cache
+/coverage
+.sass-cache/
+/connect.lock
+/libpeerconnection.log
+/typings
+
+# Logai
+npm-debug.log
+yarn-error.log
+testem.log
+
+# IDE
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings/
+.springBeans
+.sts4-cache
+.idea/
+.c9/
+*.iws
+*.iml
+*.ipr
+*.launch
+*.sublime-workspace
+.history/*
+
+# VS Code: leidžiami bendri projekto nustatymai
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# NetBeans
+/nbproject/private/
+/nbbuild/
+/nbdist/
+/.nb-gradle/
+
+# Sistemos failai
+.DS_Store
+Thumbs.db

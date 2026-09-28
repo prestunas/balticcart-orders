@@ -1,0 +1,262 @@
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 20px;
+  background: #ffffff;
+  border: 1px solid #e2e6ea;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.toolbar__summary {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  flex: 0 0 auto;
+}
+
+.toolbar__count {
+  font-size: 28px;
+  font-weight: 700;
+  color: #0b3d62;
+  line-height: 1;
+}
+
+.toolbar__count-label {
+  font-size: 13px;
+  color: #667085;
+}
+
+.toolbar__controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: flex-end;
+  gap: 12px;
+  flex: 1 1 auto;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.field__label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #667085;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.field__input {
+  min-width: 200px;
+  padding: 8px 10px;
+  font-size: 14px;
+  border: 1px solid #d0d5dd;
+  border-radius: 6px;
+  background: #fff;
+  color: #1a2b3c;
+
+  &:focus {
+    outline: none;
+    border-color: #0b6bab;
+    box-shadow: 0 0 0 3px rgba(11, 107, 171, 0.15);
+  }
+
+  &:disabled {
+    background: #f2f4f7;
+    color: #98a2b3;
+  }
+}
+
+.field--search {
+  flex: 1 1 260px;
+  max-width: 420px;
+}
+
+.field--search .field__input {
+  min-width: 0;
+  width: 100%;
+}
+
+.field--status {
+  flex: 0 0 auto;
+}
+
+.refresh-btn {
+  padding: 9px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  background: #0b6bab;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.15s ease-in-out;
+
+  &:hover:not(:disabled) {
+    background: #095782;
+  }
+
+  &:disabled {
+    background: #98c4dd;
+    cursor: not-allowed;
+  }
+}
+
+.content-panel {
+  background: #ffffff;
+  border: 1px solid #e2e6ea;
+  border-radius: 10px;
+  min-height: 200px;
+}
+
+.state-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 8px;
+  padding: 48px 24px;
+  color: #667085;
+
+  p {
+    margin: 0;
+    max-width: 420px;
+  }
+}
+
+.state-panel__title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1a2b3c;
+}
+
+.state-panel--error .state-panel__title {
+  color: #b42318;
+}
+
+.state-panel--error .refresh-btn {
+  margin-top: 8px;
+}
+
+.spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid #d0e4f0;
+  border-top-color: #0b6bab;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.table-wrapper {
+  overflow-x: auto;
+}
+
+.orders-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+
+  th,
+  td {
+    padding: 12px 16px;
+    text-align: left;
+    white-space: nowrap;
+  }
+
+  thead th {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: #667085;
+    border-bottom: 1px solid #e2e6ea;
+  }
+
+  tbody tr:not(:last-child) td {
+    border-bottom: 1px solid #eef1f4;
+  }
+
+  tbody tr:hover {
+    background: #f8fafc;
+  }
+}
+
+.orders-table__order-number {
+  font-weight: 600;
+  color: #0b3d62;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.status-badge--new {
+  background: #e0eafc;
+  color: #1d4ed8;
+}
+
+.status-badge--processing {
+  background: #fef3c7;
+  color: #b45309;
+}
+
+.status-badge--shipped {
+  background: #e0f2fe;
+  color: #0369a1;
+}
+
+.status-badge--delivered {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.status-badge--cancelled {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+@media (max-width: 640px) {
+  .toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .toolbar__controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .field--search {
+    flex: 0 0 auto;
+    max-width: none;
+  }
+
+  .field__input {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .refresh-btn {
+    width: 100%;
+  }
+}
