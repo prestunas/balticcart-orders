@@ -1,4 +1,4 @@
-# Maven ir Java
+# Maven and Java
 HELP.md
 target/
 .mvn/wrapper/maven-wrapper.jar
@@ -8,7 +8,7 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
-# Angular ir Node
+# Angular and Node
 /dist
 /tmp
 /out-tsc
@@ -21,12 +21,12 @@ build/
 /libpeerconnection.log
 /typings
 
-# Logai
+# Logs
 npm-debug.log
 yarn-error.log
 testem.log
 
-# IDE
+# IDEs and editors
 .apt_generated
 .classpath
 .factorypath
@@ -43,7 +43,7 @@ testem.log
 *.sublime-workspace
 .history/*
 
-# VS Code: leidžiami bendri projekto nustatymai
+# VS Code: allow shared project settings
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
@@ -56,6 +56,6 @@ testem.log
 /nbdist/
 /.nb-gradle/
 
-# Sistemos failai
+# System files
 .DS_Store
 Thumbs.db
