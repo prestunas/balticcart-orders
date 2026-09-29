@@ -8,4 +8,5 @@ export interface Order {
   customerName: string;
   createdAt: string;
   status: OrderStatus;
+  needsAttention: boolean;
 }

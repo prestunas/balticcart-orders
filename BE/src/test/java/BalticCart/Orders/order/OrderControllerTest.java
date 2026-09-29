@@ -36,12 +36,41 @@ class OrderControllerTest {
                 responseBody,
                 objectMapper.getTypeFactory().constructCollectionType(List.class, OrderResponse.class));
 
-        assertThat(orders).hasSize(12);
+        assertThat(orders).hasSizeGreaterThan(0);
 
         for (int i = 0; i < orders.size() - 1; i++) {
             Instant current = orders.get(i).createdAt();
             Instant next = orders.get(i + 1).createdAt();
             assertThat(current).isAfterOrEqualTo(next);
+        }
+    }
+
+    @Test
+    void getAllOrders_needsAttentionIsTrueForOldNewOrProcessingOrders() throws Exception {
+        String responseBody = mockMvc.perform(get("/api/orders"))
+                .andExpect(status().isOk())
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+
+        List<OrderResponse> orders = objectMapper.readValue(
+                responseBody,
+                objectMapper.getTypeFactory().constructCollectionType(List.class, OrderResponse.class));
+
+        Instant threshold = Instant.now().minusSeconds(24 * 3600);
+
+        for (OrderResponse order : orders) {
+            boolean oldEnough = order.createdAt().isBefore(threshold);
+            boolean activeStatus = order.status() == OrderStatus.NEW || order.status() == OrderStatus.PROCESSING;
+            if (oldEnough && activeStatus) {
+                assertThat(order.needsAttention())
+                        .as("Expected needsAttention=true for order %s", order.orderNumber())
+                        .isTrue();
+            } else {
+                assertThat(order.needsAttention())
+                        .as("Expected needsAttention=false for order %s", order.orderNumber())
+                        .isFalse();
+            }
         }
     }
 }

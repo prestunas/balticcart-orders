@@ -4,6 +4,9 @@
     <span class="toolbar__count-label">
       of {{ orders.length }} order{{ orders.length === 1 ? '' : 's' }}
     </span>
+    <span class="attention-badge" *ngIf="attentionCount > 0" title="Orders needing attention">
+      {{ attentionCount }} needs attention
+    </span>
   </div>
 
   <div class="toolbar__controls">
@@ -32,6 +35,19 @@
       </select>
     </label>
 
+    <label class="field field--attention">
+      <span class="field__label">Attention</span>
+      <label class="attention-toggle">
+        <input
+          type="checkbox"
+          [ngModel]="attentionOnly"
+          (ngModelChange)="onAttentionOnlyChange($event)"
+          [disabled]="loading || loadError"
+        />
+        <span>Needs attention only</span>
+      </label>
+    </label>
+
     <button type="button" class="refresh-btn" (click)="loadOrders()" [disabled]="loading">
       Refresh
     </button>
@@ -57,21 +73,36 @@
 
   <div class="state-panel" *ngIf="!loading && !loadError && orders.length > 0 && filteredOrders.length === 0">
     <p class="state-panel__title">No matching orders</p>
-    <p>Try a different search term or status filter.</p>
+    <p>Try a different search term, status filter, or turn off the attention filter.</p>
   </div>
 
   <div class="table-wrapper" *ngIf="!loading && !loadError && filteredOrders.length > 0">
     <table class="orders-table">
       <thead>
         <tr>
-          <th scope="col">Order #</th>
-          <th scope="col">Customer</th>
-          <th scope="col">Created</th>
-          <th scope="col">Status</th>
+          <th scope="col" class="sortable-header" (click)="sortOrders('orderNumber')">
+            Order #
+            <span class="sort-indicator" *ngIf="sortColumn === 'orderNumber'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
+          </th>
+          <th scope="col" class="sortable-header" (click)="sortOrders('customerName')">
+            Customer
+            <span class="sort-indicator" *ngIf="sortColumn === 'customerName'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
+          </th>
+          <th scope="col" class="sortable-header" (click)="sortOrders('createdAt')">
+            Created
+            <span class="sort-indicator" *ngIf="sortColumn === 'createdAt'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
+          </th>
+          <th scope="col" class="sortable-header" (click)="sortOrders('status')">
+            Status
+            <span class="sort-indicator" *ngIf="sortColumn === 'status'">{{ sortDirection === 'asc' ? '▲' : '▼' }}</span>
+          </th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let order of filteredOrders">
+        <tr
+          *ngFor="let order of filteredOrders"
+          [ngClass]="{ 'orders-table__row--attention': order.needsAttention }"
+        >
           <td class="orders-table__order-number">{{ order.orderNumber }}</td>
           <td>{{ order.customerName }}</td>
           <td>{{ order.createdAt | vilniusDate }}</td>
